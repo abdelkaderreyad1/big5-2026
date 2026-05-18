@@ -2,481 +2,661 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0A1628">
 <title>BIG5 2026 — Niqat & Takweenat</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--c1:#0A1628;--c2:#1A3A6B;--c3:#2563EB;--gold:#F59E0B;--bg:#F8FAFF;--card:#fff;--border:#E2E8F0;--text:#0F172A;--muted:#64748B;--light:#F1F5F9;--danger:#EF4444;--success:#10B981}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;direction:rtl}
-.header{background:linear-gradient(135deg,var(--c1),var(--c2));color:#fff;padding:14px 16px;text-align:center;position:sticky;top:0;z-index:100}
-.header h1{font-size:15px;font-weight:700}
-.header p{font-size:11px;opacity:0.65;margin-top:3px}
+:root{
+  --c1:#0A1628;--c2:#1A3A6B;--c3:#2563EB;--c4:#3B82F6;
+  --gold:#F59E0B;--gold2:#FCD34D;
+  --purple:#7C3AED;--green:#10B981;--danger:#EF4444;
+  --bg:#F0F4FF;--card:#fff;--border:#E2E8F0;
+  --text:#0F172A;--muted:#64748B;--light:#F1F5F9;
+}
+body{font-family:'Cairo',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;direction:rtl}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,var(--c1) 0%,var(--c2) 100%);color:#fff;padding:14px 16px;text-align:center;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.3)}
+.header h1{font-size:15px;font-weight:900;letter-spacing:0.5px}
+.header p{font-size:10px;opacity:0.6;margin-top:2px}
+
+/* TABS */
 .tabs{display:flex;background:var(--c1);border-bottom:2px solid var(--gold)}
-.tab{flex:1;padding:10px 4px;text-align:center;font-size:12px;color:rgba(255,255,255,0.6);cursor:pointer;transition:all 0.2s;font-weight:500}
-.tab.active{color:var(--gold);border-bottom:2px solid var(--gold);margin-bottom:-2px}
-.page{display:none;padding:12px}
+.tab{flex:1;padding:11px 4px;text-align:center;font-size:12px;color:rgba(255,255,255,0.55);cursor:pointer;font-weight:600;font-family:'Cairo',sans-serif;transition:all 0.2s}
+.tab.active{color:var(--gold);border-bottom:3px solid var(--gold);margin-bottom:-2px}
+
+/* PAGES */
+.page{display:none;padding:12px;min-height:calc(100vh - 100px)}
 .page.active{display:block}
-.card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
-.section-title{font-size:12px;font-weight:700;color:var(--c3);letter-spacing:0.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
-.section-title::before{content:'';width:3px;height:14px;background:var(--gold);border-radius:2px;display:inline-block;flex-shrink:0}
-.form-group{margin-bottom:12px}
-label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
-input,textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;color:var(--text);background:var(--bg);font-family:inherit;transition:border-color 0.2s;direction:rtl}
-input:focus,textarea:focus{outline:none;border-color:var(--c3)}
-textarea{resize:none;height:70px}
-.tag-group{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
-.tag{padding:8px 14px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--muted);transition:all 0.15s;user-select:none}
-.tag.sel-blue{background:var(--c3);color:#fff;border-color:var(--c3)}
-.tag.sel-gold{background:var(--gold);color:var(--c1);border-color:var(--gold)}
-.tag.sel-green{background:var(--success);color:#fff;border-color:var(--success)}
-.tag.sel-purple{background:#7C3AED;color:#fff;border-color:#7C3AED}
-.company-tag{padding:10px 16px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--muted);transition:all 0.15s;user-select:none;flex:1;text-align:center}
-.company-tag.sel-niqat{background:var(--c2);color:#fff;border-color:var(--c2)}
-.company-tag.sel-takweenat{background:#7C3AED;color:#fff;border-color:#7C3AED}
-.upload-area{border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--light)}
+
+/* CARDS */
+.card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.section-title{font-size:11px;font-weight:700;color:var(--c3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.section-title::before{content:'';width:3px;height:14px;background:var(--gold);border-radius:2px;flex-shrink:0}
+
+/* FORMS */
+.fg{margin-bottom:11px}
+label{display:block;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:4px}
+input,textarea{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:9px;font-size:14px;color:var(--text);background:#FAFBFF;font-family:'Cairo',inherit;direction:rtl;transition:border-color 0.2s}
+input:focus,textarea:focus{outline:none;border-color:var(--c3);background:#fff}
+textarea{resize:none;height:68px}
+
+/* TAGS */
+.tg{display:flex;flex-wrap:wrap;gap:7px;margin-top:5px}
+.tag{padding:8px 13px;border-radius:22px;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:#fff;color:var(--muted);transition:all 0.15s;user-select:none;font-family:'Cairo',sans-serif}
+.tag.sb{background:var(--c3);color:#fff;border-color:var(--c3)}
+.tag.sg{background:var(--gold);color:var(--c1);border-color:var(--gold)}
+.tag.sn{background:var(--green);color:#fff;border-color:var(--green)}
+.tag.sp{background:var(--purple);color:#fff;border-color:var(--purple)}
+
+/* COMPANY TAGS */
+.ctag{padding:11px 16px;border-radius:11px;font-size:13px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:#fff;color:var(--muted);flex:1;text-align:center;font-family:'Cairo',sans-serif;transition:all 0.15s}
+.ctag.cn{background:var(--c2);color:#fff;border-color:var(--c2)}
+.ctag.ct{background:var(--purple);color:#fff;border-color:var(--purple)}
+
+/* UPLOAD */
+.upload-area{border:2px dashed var(--border);border-radius:12px;padding:18px;text-align:center;cursor:pointer;background:var(--light);transition:all 0.2s}
 .upload-area:hover{border-color:var(--c3);background:#EFF6FF}
-.upload-icon{font-size:28px;margin-bottom:6px}
+.upload-icon{font-size:28px;margin-bottom:5px}
 .upload-area p{font-size:12px;color:var(--muted)}
-.preview-imgs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-.preview-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
-.btn{width:100%;padding:14px;border-radius:10px;border:none;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;font-family:inherit}
-.btn:active{transform:scale(0.98)}
+.prev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.prev-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:9px;border:1px solid var(--border)}
+input[type=file]{display:none}
+
+/* BUTTONS */
+.btn{width:100%;padding:14px;border-radius:11px;border:none;font-size:15px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.18s}
+.btn:active{transform:scale(0.97)}
+.btn-save{background:linear-gradient(135deg,var(--green),#059669);color:#fff;box-shadow:0 4px 15px rgba(16,185,129,0.3)}
 .btn-primary{background:linear-gradient(135deg,var(--c3),var(--c2));color:#fff}
-.btn-success{background:linear-gradient(135deg,var(--success),#059669);color:#fff}
-.btn-secondary{background:var(--light);color:var(--c2);border:1.5px solid var(--border)}
+.btn-secondary{background:var(--light);color:var(--c2);border:2px solid var(--border)}
 .btn-gold{background:linear-gradient(135deg,var(--gold),#D97706);color:var(--c1)}
 .btn-danger{background:var(--danger);color:#fff}
-.btn-sm{padding:7px 14px;font-size:12px;width:auto;border-radius:8px}
-.badge{display:inline-flex;align-items:center;padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600}
-.badge-blue{background:#EFF6FF;color:var(--c3)}
-.badge-gold{background:#FEF3C7;color:#92400E}
-.badge-green{background:#ECFDF5;color:#065F46}
-.badge-gray{background:#F1F5F9;color:var(--muted)}
-.lead-item{padding:12px;border-radius:10px;border:1px solid var(--border);margin-bottom:8px;background:#fff}
-.lead-name{font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px}
+.btn-sm{padding:7px 13px;font-size:12px;width:auto;border-radius:8px}
+
+/* MEMBER BAR */
+.member-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;background:linear-gradient(135deg,#EFF6FF,#E0ECFF);border:1px solid #BFDBFE;border-radius:11px;margin-bottom:12px}
+.member-dot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 6px rgba(16,185,129,0.5)}
+.setup-warn{background:#FEF3C7;border:1px solid #FCD34D;border-radius:11px;padding:12px;text-align:center;margin-bottom:12px}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
+.bb{background:#EFF6FF;color:var(--c3)}
+.bg2{background:#FEF3C7;color:#92400E}
+.bgr{background:#ECFDF5;color:#065F46}
+.bgy{background:#F1F5F9;color:var(--muted)}
+.bpp{background:#EDE9FE;color:#5B21B6}
+
+/* LEAD ITEMS */
+.lead-item{padding:12px;border-radius:11px;border:1px solid var(--border);margin-bottom:8px;background:#fff;transition:all 0.15s}
+.lead-name{font-size:14px;font-weight:700;margin-bottom:4px}
 .lead-meta{font-size:11px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center}
-.stat-num{font-size:24px;font-weight:700;color:var(--c3)}
-.stat-label{font-size:11px;color:var(--muted);margin-top:2px}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--c1);color:#fff;padding:12px 24px;border-radius:20px;font-size:14px;font-weight:600;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap}
-.toast.show{opacity:1}
-.toast.success{background:var(--success)}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:flex-end}
-.modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:20px 20px 0 0;padding:20px;width:100%;max-height:85vh;overflow-y:auto}
-.modal-title{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--c1);text-align:center}
-.detail-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
-.detail-label{color:var(--muted);font-size:12px}
-.detail-val{font-weight:500;text-align:left;max-width:60%;word-break:break-word}
-.close-btn{width:100%;padding:12px;background:var(--light);border:none;border-radius:8px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer;font-family:inherit;margin-top:12px}
-.member-indicator{display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--light);border-radius:10px;margin-bottom:12px}
-.member-dot{width:8px;height:8px;border-radius:50%;background:var(--success);flex-shrink:0}
-input[type=file]{display:none}
+
+/* DASHBOARD */
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.dash-card{background:var(--card);border-radius:13px;padding:14px;text-align:center;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.dash-num{font-size:28px;font-weight:900;line-height:1}
+.dash-label{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
+.dash-card.blue .dash-num{color:var(--c3)}
+.dash-card.gold .dash-num{color:var(--gold)}
+.dash-card.green .dash-num{color:var(--green)}
+.dash-card.purple .dash-num{color:var(--purple)}
+
+/* TEAM TABLE */
+.team-table{width:100%;border-collapse:collapse}
+.team-table th{font-size:11px;font-weight:700;color:var(--muted);text-align:right;padding:8px 6px;border-bottom:2px solid var(--border);background:var(--light)}
+.team-table td{font-size:13px;padding:10px 6px;border-bottom:1px solid var(--border);vertical-align:middle}
+.team-rank{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin:0 auto}
+.rank-1{background:linear-gradient(135deg,#F59E0B,#D97706);color:#fff}
+.rank-2{background:linear-gradient(135deg,#94A3B8,#64748B);color:#fff}
+.rank-3{background:linear-gradient(135deg,#CD7C32,#A0522D);color:#fff}
+.rank-n{background:var(--light);color:var(--muted)}
+
+/* FILTER BAR */
 .filter-bar{display:flex;gap:6px;overflow-x:auto;padding:2px;margin-bottom:10px;scrollbar-width:none}
 .filter-bar::-webkit-scrollbar{display:none}
-.filter-chip{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:500;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;white-space:nowrap;flex-shrink:0}
+.filter-chip{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700;border:2px solid var(--border);background:#fff;color:var(--muted);cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:'Cairo',sans-serif}
 .filter-chip.active{background:var(--c3);color:#fff;border-color:var(--c3)}
-.empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
-.empty-state .eicon{font-size:40px;margin-bottom:10px}
-.admin-lock{min-height:300px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:30px}
-.admin-badge{display:flex;align-items:center;gap:6px;background:#FEF3C7;border:1px solid #FCD34D;border-radius:8px;padding:8px 12px;margin-bottom:12px}
-.admin-badge span{font-size:12px;font-weight:600;color:#92400E}
-.sync-status{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);justify-content:center;padding:6px}
-.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--success)}
-.sync-dot.syncing{animation:pulse 1s infinite}
+
+/* ADMIN LOCK */
+.admin-lock{min-height:320px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:30px}
+.admin-badge{display:flex;align-items:center;gap:6px;background:#FEF3C7;border:1px solid #FCD34D;border-radius:9px;padding:8px 12px;margin-bottom:12px}
+.admin-badge span{font-size:12px;font-weight:700;color:#92400E}
+.pw-input{letter-spacing:4px;text-align:center;font-size:20px;background:#FAFBFF}
+
+/* SYNC */
+.sync-bar{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);justify-content:center;padding:6px}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+.sync-dot.sy{animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* MODAL */
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;align-items:flex-end}
+.mo.open{display:flex}
+.modal{background:#fff;border-radius:22px 22px 0 0;padding:20px;width:100%;max-height:88vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:700;margin-bottom:16px;color:var(--c1);text-align:center}
+.detail-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border);font-size:13px}
+.detail-label{color:var(--muted);font-size:12px;font-weight:600}
+.detail-val{font-weight:600;text-align:left;max-width:62%;word-break:break-word}
+.close-btn{width:100%;padding:12px;background:var(--light);border:none;border-radius:9px;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;font-family:'Cairo',sans-serif;margin-top:12px}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--c1);color:#fff;padding:12px 24px;border-radius:22px;font-size:14px;font-weight:700;z-index:999;opacity:0;transition:opacity 0.3s;pointer-events:none;white-space:nowrap;font-family:'Cairo',sans-serif}
+.toast.show{opacity:1}
+.toast.ok{background:var(--green)}
+.toast.err{background:var(--danger)}
+
+/* SHEET CONNECTED */
+.sheet-ok{background:#ECFDF5;border:1px solid #6EE7B7;border-radius:9px;padding:8px 12px;font-size:12px;color:#065F46;text-align:center;font-weight:700;margin-bottom:10px}
 .action-row{display:flex;gap:8px;margin-top:10px}
-.pw-input{letter-spacing:3px;text-align:center;font-size:18px}
-.setup-warning{background:#FEF3C7;border:1px solid #FCD34D;border-radius:10px;padding:12px;text-align:center;margin-bottom:12px}
-.sheet-connected{background:#ECFDF5;border:1px solid #6EE7B7;border-radius:8px;padding:8px 12px;font-size:12px;color:#065F46;text-align:center;margin-bottom:8px}
+.empty-state{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty-state .ei{font-size:40px;margin-bottom:10px}
+
+/* PROGRESS BAR */
+.progress-wrap{background:var(--light);border-radius:10px;height:8px;overflow:hidden;margin-top:4px}
+.progress-bar{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--c3),var(--c4));transition:width 0.5s}
+
+/* IMAGE IN SHEET NOTICE */
+.img-notice{font-size:11px;color:var(--c3);margin-top:6px;text-align:center}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>BIG5 2026-☺ Niqat &amp; Takweenat</h1>
-  <p>أداة جمع بيانات العملاء · NIQAT</p>
+  <h1>🏗️ BIG5 2026-☺ Niqat &amp; Takweenat</h1>
+  <p>أداة جمع بيانات العملاء · NIQAT Operations</p>
 </div>
 
 <div class="tabs">
   <div class="tab active" onclick="showTab('form')">📝 تسجيل</div>
   <div class="tab" onclick="showTab('settings')">⚙️ إعداد</div>
-  <div class="tab" onclick="showTab('admin')">🔐 مدير</div>
+  <div class="tab" onclick="showTab('admin')">📊 مدير</div>
 </div>
 
+<!-- ===== FORM ===== -->
 <div id="page-form" class="page active">
-  <div id="setup-warning" class="setup-warning" style="display:none">
+  <div id="sw" class="setup-warn" style="display:none">
     <p style="font-size:13px;font-weight:700;color:#92400E">⚠️ أكمل إعداد بياناتك أولاً</p>
-    <span style="font-size:11px;color:#B45309">اذهب لتبويب الإعداد وأدخل اسمك واختار شركتك</span>
+    <span style="font-size:11px;color:#B45309">اذهب لتبويب الإعداد</span>
   </div>
-  <div id="member-bar" class="member-indicator" style="display:none">
+  <div id="mb" class="member-bar" style="display:none">
     <div class="member-dot"></div>
     <div style="flex:1">
-      <div style="font-size:13px;font-weight:600;color:var(--text)" id="bar-name">—</div>
-      <div style="font-size:11px;color:var(--muted)" id="bar-company">—</div>
+      <div style="font-size:13px;font-weight:700;color:var(--text)" id="bn">—</div>
+      <div style="font-size:11px;color:var(--muted)" id="bc">—</div>
     </div>
-    <span style="font-size:11px;color:var(--c3);cursor:pointer" onclick="showTab('settings')">تعديل</span>
+    <span style="font-size:11px;color:var(--c3);cursor:pointer;font-weight:700" onclick="showTab('settings')">تعديل</span>
   </div>
+
   <div class="card">
     <div class="section-title">بيانات العميل</div>
-    <div class="form-group"><label>الاسم الكامل *</label><input type="text" id="f-name" placeholder="اسم العميل أو الشركة"></div>
-    <div class="form-group"><label>رقم الهاتف *</label><input type="tel" id="f-phone" placeholder="+971 50 000 0000" dir="ltr"></div>
-    <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="f-email" placeholder="email@example.com" dir="ltr"></div>
-    <div class="form-group"><label>الشركة / الجهة</label><input type="text" id="f-company" placeholder="اسم الشركة"></div>
+    <div class="fg"><label>الاسم الكامل *</label><input type="text" id="fn" placeholder="اسم العميل أو الشركة"></div>
+    <div class="fg"><label>رقم الهاتف *</label><input type="tel" id="fp" placeholder="+971 50 000 0000" dir="ltr"></div>
+    <div class="fg"><label>البريد الإلكتروني</label><input type="email" id="fe" placeholder="email@example.com" dir="ltr"></div>
+    <div class="fg"><label>الشركة / الجهة</label><input type="text" id="fc" placeholder="اسم الشركة"></div>
   </div>
+
   <div class="card">
     <div class="section-title">تابع:</div>
-    <div class="tag-group">
-      <div class="tag" data-group="product" data-sel="sel-blue" onclick="selectTag(this,'product')">🎯 نقاط</div>
-      <div class="tag" data-group="product" data-sel="sel-purple" onclick="selectTag(this,'product')">🏗️ تكوينات BIM</div>
-      <div class="tag" data-group="product" data-sel="sel-green" onclick="selectTag(this,'product')">🎨 تكوينات Interior Design</div>
+    <div class="tg">
+      <div class="tag" data-g="p" data-s="sb" onclick="ST(this,'p')">🎯 نقاط</div>
+      <div class="tag" data-g="p" data-s="sp" onclick="ST(this,'p')">🏗️ تكوينات BIM</div>
+      <div class="tag" data-g="p" data-s="sn" onclick="ST(this,'p')">🎨 تكوينات Interior Design</div>
     </div>
   </div>
+
   <div class="card">
     <div class="section-title">نوع العميل:</div>
-    <div class="tag-group">
-      <div class="tag" data-group="type" data-sel="sel-green" onclick="selectTag(this,'type')">🏢 شركات</div>
-      <div class="tag" data-group="type" data-sel="sel-blue" onclick="selectTag(this,'type')">👤 أفراد</div>
-      <div class="tag" data-group="type" data-sel="sel-gold" onclick="selectTag(this,'type')">⭐ مهم جداً</div>
+    <div class="tg">
+      <div class="tag" data-g="t" data-s="sn" onclick="ST(this,'t')">🏢 شركات</div>
+      <div class="tag" data-g="t" data-s="sb" onclick="ST(this,'t')">👤 أفراد</div>
+      <div class="tag" data-g="t" data-s="sg" onclick="ST(this,'t')">⭐ مهم جداً</div>
     </div>
   </div>
+
   <div class="card">
-    <div class="section-title">صورة البيزنس كارت / ملفات</div>
-    <div class="upload-area" onclick="document.getElementById('f-img').click()">
+    <div class="section-title">صورة البيزنس كارت</div>
+    <div class="upload-area" onclick="document.getElementById('fi').click()">
       <div class="upload-icon">📷</div>
       <p>اضغط لالتقاط صورة أو رفع ملف</p>
-      <p style="font-size:10px;margin-top:3px;color:var(--c3)">Business Card · أي وثيقة</p>
+      <p style="font-size:10px;margin-top:3px;color:var(--c3)">Business Card · سيُحفظ تلقائياً في Google Drive</p>
     </div>
-    <input type="file" id="f-img" accept="image/*" capture="environment" multiple onchange="handleImg(event)">
-    <div id="img-preview" class="preview-imgs"></div>
+    <input type="file" id="fi" accept="image/*" capture="environment" multiple onchange="HI(event)">
+    <div id="ip" class="prev-grid"></div>
+    <div id="img-status" class="img-notice" style="display:none"></div>
   </div>
+
   <div class="card">
     <div class="section-title">ملاحظات</div>
-    <textarea id="f-notes" placeholder="أي ملاحظات للرجوع إليها لاحقاً..."></textarea>
+    <textarea id="fno" placeholder="أي ملاحظات للرجوع إليها لاحقاً..."></textarea>
   </div>
-  <div style="padding:0 0 24px">
-    <button class="btn btn-success" onclick="submitLead()">💾 حفظ</button>
+
+  <div style="padding:0 0 28px">
+    <button class="btn btn-save" onclick="SL()">💾 حفظ وإرسال للشيت</button>
   </div>
 </div>
 
+<!-- ===== SETTINGS ===== -->
 <div id="page-settings" class="page">
   <div class="card">
     <div class="section-title">بياناتك الشخصية</div>
-    <div class="form-group"><label>اسمك الكامل *</label><input type="text" id="member-input" placeholder="مثال: أحمد محمد"></div>
-    <div class="form-group">
+    <div class="fg"><label>اسمك الكامل *</label><input type="text" id="mi" placeholder="مثال: أحمد محمد"></div>
+    <div class="fg">
       <label>الشركة التي تمثلها *</label>
-      <div class="tag-group" style="margin-top:0">
-        <div class="company-tag" data-company="Niqat" onclick="selectCompany(this,'sel-niqat')">☺ Niqat</div>
-        <div class="company-tag" data-company="Takweenat" onclick="selectCompany(this,'sel-takweenat')">🏗️ Takweenat</div>
+      <div class="tg" style="margin-top:0">
+        <div class="ctag" data-c="Niqat" onclick="SC(this,'cn')">☺ Niqat</div>
+        <div class="ctag" data-c="Takweenat" onclick="SC(this,'ct')">🏗️ Takweenat</div>
       </div>
     </div>
-    <button class="btn btn-primary" onclick="saveMember()">💾 حفظ البيانات</button>
-    <div id="member-saved-box" style="display:none;margin-top:10px;background:#ECFDF5;border:1px solid #6EE7B7;border-radius:8px;padding:10px;text-align:center">
-      <div style="font-size:13px;font-weight:700;color:#065F46" id="saved-name-txt"></div>
-      <div style="font-size:11px;color:#059669;margin-top:2px" id="saved-co-txt"></div>
+    <button class="btn btn-primary" onclick="SM()">💾 حفظ البيانات</button>
+    <div id="msb" style="display:none;margin-top:10px;background:#ECFDF5;border:1px solid #6EE7B7;border-radius:9px;padding:10px;text-align:center">
+      <div style="font-size:13px;font-weight:700;color:#065F46" id="snt"></div>
+      <div style="font-size:11px;color:#059669;margin-top:2px" id="sct"></div>
     </div>
   </div>
 </div>
 
+<!-- ===== ADMIN ===== -->
 <div id="page-admin" class="page">
-  <div id="admin-lock" class="admin-lock">
-    <div style="font-size:52px">🔐</div>
-    <div style="font-size:16px;font-weight:700;color:var(--c1)">لوحة المدير</div>
-    <div style="font-size:12px;color:var(--muted);text-align:center">مخصصة للمدير فقط</div>
-    <div style="width:100%;max-width:260px">
-      <input type="password" id="admin-pw" class="pw-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkAdmin()">
+  <div id="al" class="admin-lock">
+    <div style="font-size:56px">📊</div>
+    <div style="font-size:17px;font-weight:900;color:var(--c1)">لوحة المدير</div>
+    <div style="font-size:12px;color:var(--muted);text-align:center">مخصصة للمدير فقط · أدخل كلمة السر</div>
+    <div style="width:100%;max-width:270px">
+      <input type="password" id="ap" class="pw-input" placeholder="••••••••" onkeydown="if(event.key==='Enter')CA()">
       <div style="height:10px"></div>
-      <button class="btn btn-primary" onclick="checkAdmin()">🔓 دخول</button>
-      <p id="pw-error" style="color:var(--danger);font-size:12px;text-align:center;margin-top:8px;display:none">كلمة السر غير صحيحة</p>
+      <button class="btn btn-primary" onclick="CA()">🔓 دخول</button>
+      <p id="pe" style="color:var(--danger);font-size:12px;text-align:center;margin-top:8px;display:none">كلمة السر غير صحيحة ❌</p>
     </div>
   </div>
-  <div id="admin-content" style="display:none">
+
+  <div id="ac" style="display:none">
     <div class="admin-badge">
       <span>🛡️ وضع المدير — عبدالقادر رياض</span>
-      <span style="margin-right:auto;cursor:pointer;color:#92400E" onclick="lockAdmin()">خروج</span>
+      <span style="margin-right:auto;cursor:pointer;color:#92400E;font-weight:700" onclick="LA()">خروج</span>
     </div>
+
+    <!-- DASHBOARD -->
+    <div class="card">
+      <div class="section-title">📊 Dashboard — إجمالي الأداء</div>
+      <div class="dash-grid">
+        <div class="dash-card blue"><div class="dash-num" id="d-total">0</div><div class="dash-label">إجمالي العملاء</div></div>
+        <div class="dash-card gold"><div class="dash-num" id="d-vip">0</div><div class="dash-label">⭐ مهم جداً</div></div>
+        <div class="dash-card green"><div class="dash-num" id="d-co">0</div><div class="dash-label">🏢 شركات</div></div>
+        <div class="dash-card purple"><div class="dash-num" id="d-today">0</div><div class="dash-label">📅 اليوم</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+        <div style="background:#EFF6FF;border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:900;color:var(--c3)" id="d-niqat">0</div>
+          <div style="font-size:10px;color:var(--muted);font-weight:700">☺ Niqat</div>
+        </div>
+        <div style="background:#EDE9FE;border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:900;color:var(--purple)" id="d-tak">0</div>
+          <div style="font-size:10px;color:var(--muted);font-weight:700">🏗️ Takweenat</div>
+        </div>
+        <div style="background:#ECFDF5;border-radius:10px;padding:10px;text-align:center">
+          <div style="font-size:20px;font-weight:900;color:var(--green)" id="d-img">0</div>
+          <div style="font-size:10px;color:var(--muted);font-weight:700">📷 صور</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEAM PERFORMANCE - PERMANENT -->
+    <div class="card">
+      <div class="section-title">🏆 أداء الفريق — دائم</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:10px">⚠️ هذا الجدول لا يُمسح إلا بقرار من المدير</div>
+      <div style="overflow-x:auto">
+        <table class="team-table">
+          <thead>
+            <tr>
+              <th style="text-align:center;width:40px">#</th>
+              <th>العضو</th>
+              <th>الشركة</th>
+              <th style="text-align:center">العملاء</th>
+              <th>التقدم</th>
+            </tr>
+          </thead>
+          <tbody id="team-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- PRODUCT BREAKDOWN -->
+    <div class="card">
+      <div class="section-title">📈 توزيع المنتجات</div>
+      <div id="prod-breakdown"></div>
+    </div>
+
+    <!-- RECORDS -->
+    <div class="card">
+      <div class="section-title">📋 كل السجلات</div>
+      <div class="filter-bar">
+        <div class="filter-chip active" onclick="FL('all',this)">الكل</div>
+        <div class="filter-chip" onclick="FL('نقاط',this)">🎯 نقاط</div>
+        <div class="filter-chip" onclick="FL('تكوينات BIM',this)">🏗️ BIM</div>
+        <div class="filter-chip" onclick="FL('تكوينات Interior Design',this)">🎨 Interior</div>
+        <div class="filter-chip" onclick="FL('شركات',this)">🏢 شركات</div>
+        <div class="filter-chip" onclick="FL('أفراد',this)">👤 أفراد</div>
+        <div class="filter-chip" onclick="FL('مهم جداً',this)">⭐ مهم</div>
+      </div>
+      <input type="search" id="as" placeholder="🔍 بحث بالاسم أو الشركة أو الهاتف..." oninput="RL()" style="margin-bottom:10px">
+      <div id="ll"></div>
+    </div>
+
+    <!-- SHEET SETTINGS -->
     <div class="card">
       <div class="section-title">⚙️ إعداد Google Sheets</div>
-      <div class="sheet-connected">✅ متربط — BIG5 2026 Customer Database</div>
-      <div class="form-group">
-        <label>رابط Apps Script</label>
-        <input type="url" id="sheet-url" dir="ltr" style="font-size:11px">
-      </div>
-      <button class="btn btn-secondary btn-sm" onclick="saveSheetUrl()" style="width:100%">🔗 تحديث الرابط</button>
-      <div style="margin-top:8px;text-align:center">
-        <a href="https://docs.google.com/spreadsheets/d/1fdOBEGdy65V8a3RXU20CZ0gxucny7miseBHhTDrevt0/edit" target="_blank" style="font-size:12px;color:var(--c3)">📊 فتح الشيت</a>
-      </div>
+      <div class="sheet-ok">✅ متربط — BIG5 2026 Customer Database</div>
+      <div class="fg"><label>رابط Apps Script</label><input type="url" id="su" dir="ltr" style="font-size:11px"></div>
+      <button class="btn btn-secondary btn-sm" onclick="SSU()" style="width:100%;margin-bottom:8px">🔗 تحديث الرابط</button>
+      <a href="https://docs.google.com/spreadsheets/d/1fdOBEGdy65V8a3RXU20CZ0gxucny7miseBHhTDrevt0/edit" target="_blank" style="display:block;text-align:center;font-size:12px;color:var(--c3);font-weight:700;padding:6px">📊 فتح الشيت في Drive</a>
     </div>
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-num" id="st-total">0</div><div class="stat-label">إجمالي العملاء</div></div>
-      <div class="stat-card"><div class="stat-num" id="st-vip" style="color:var(--gold)">0</div><div class="stat-label">⭐ مهم جداً</div></div>
-      <div class="stat-card"><div class="stat-num" id="st-companies" style="color:var(--success)">0</div><div class="stat-label">🏢 شركات</div></div>
-      <div class="stat-card"><div class="stat-num" id="st-today">0</div><div class="stat-label">📅 اليوم</div></div>
-    </div>
+
+    <!-- EXPORT -->
     <div class="card">
-      <div class="section-title">أداء الفريق</div>
-      <div id="team-stats"></div>
-    </div>
-    <div class="card">
-      <div class="section-title">كل السجلات</div>
-      <div class="filter-bar">
-        <div class="filter-chip active" onclick="filterLeads('all',this)">الكل</div>
-        <div class="filter-chip" onclick="filterLeads('نقاط',this)">🎯 نقاط</div>
-        <div class="filter-chip" onclick="filterLeads('تكوينات BIM',this)">🏗️ BIM</div>
-        <div class="filter-chip" onclick="filterLeads('تكوينات Interior Design',this)">🎨 Interior</div>
-        <div class="filter-chip" onclick="filterLeads('شركات',this)">🏢 شركات</div>
-        <div class="filter-chip" onclick="filterLeads('أفراد',this)">👤 أفراد</div>
-        <div class="filter-chip" onclick="filterLeads('مهم جداً',this)">⭐ مهم</div>
-      </div>
-      <input type="search" id="admin-search" placeholder="🔍 بحث..." oninput="renderAdminLeads()" style="margin-bottom:10px">
-      <div id="admin-leads-list"></div>
-    </div>
-    <div class="card">
-      <div class="section-title">تصدير البيانات</div>
-      <button class="btn btn-gold" onclick="exportCSV()">⬇️ تصدير CSV كامل</button>
-      <div class="sync-status" style="margin-top:8px"><div class="sync-dot" id="sync-dot"></div><span id="sync-text">—</span></div>
+      <div class="section-title">⬇️ تصدير البيانات</div>
+      <button class="btn btn-gold" onclick="EC()" style="margin-bottom:8px">⬇️ تصدير CSV كامل</button>
+      <div class="sync-bar"><div class="sync-dot" id="sd"></div><span id="stx">—</span></div>
     </div>
   </div>
 </div>
 
+<!-- TOAST -->
 <div class="toast" id="toast"></div>
-<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+
+<!-- MODAL -->
+<div class="mo" id="mo" onclick="CM(event)">
   <div class="modal">
-    <div class="modal-title" id="modal-title"></div>
-    <div id="modal-body"></div>
-    <button class="close-btn" onclick="closeModalDirect()">إغلاق</button>
+    <div class="modal-title" id="mt"></div>
+    <div id="mb2"></div>
+    <button class="close-btn" onclick="CMD()">إغلاق</button>
   </div>
 </div>
 
 <script>
-const ADMIN_PASS='BIG5Admin';
-const SHEET_URL='https://script.google.com/macros/s/AKfycbziIUP_qfZXj958ae0uPSAEBE7dCFdgDpUaiN4dh3h1uPQbHzKH1wAUKiy0kHqz7PSpGA/exec';
-let leads=JSON.parse(localStorage.getItem('big5_leads')||'[]');
-let currentMember=localStorage.getItem('big5_member')||'';
-let currentCompany=localStorage.getItem('big5_company')||'';
-let sheetUrl=localStorage.getItem('big5_sheet')||SHEET_URL;
-let filterActive='all';
-let imgBase64s=[];
-let adminUnlocked=false;
-let selectedCompanyEl=null;
+const PASS='BIG5Admin';
+const SHEET='https://script.google.com/macros/s/AKfycbxeowbsV9u51rjhRaPQQeQmnzepbqkEo7Kmsf0dmNSIqn3UVribbuAIAK_1qSytZsBlXQ/exec';
+
+let leads=JSON.parse(localStorage.getItem('b5l')||'[]');
+let cm=localStorage.getItem('b5m')||'';
+let cc=localStorage.getItem('b5c')||'';
+let su=localStorage.getItem('b5s')||SHEET;
+let fa='all', imgFiles=[], imgB64s=[], adminOk=false, selCo=null;
 
 function init(){
-  updateMemberBar();
-  if(currentMember)document.getElementById('member-input').value=currentMember;
-  if(currentCompany){
-    showMemberSavedBox();
-    document.querySelectorAll('.company-tag').forEach(el=>{
-      if(el.dataset.company===currentCompany){
-        el.classList.add(currentCompany==='Niqat'?'sel-niqat':'sel-takweenat');
-        selectedCompanyEl=el;
-      }
+  UM();
+  if(cm) document.getElementById('mi').value=cm;
+  if(cc){
+    SMB();
+    document.querySelectorAll('.ctag').forEach(e=>{
+      if(e.dataset.c===cc){e.classList.add(cc==='Niqat'?'cn':'ct');selCo=e;}
     });
   }
-  document.getElementById('sheet-url').value=sheetUrl;
+  document.getElementById('su').value=su;
 }
 
-function updateMemberBar(){
-  if(currentMember&&currentCompany){
-    document.getElementById('setup-warning').style.display='none';
-    document.getElementById('member-bar').style.display='flex';
-    document.getElementById('bar-name').textContent=currentMember;
-    document.getElementById('bar-company').textContent=currentCompany;
+function UM(){
+  if(cm&&cc){
+    document.getElementById('sw').style.display='none';
+    document.getElementById('mb').style.display='flex';
+    document.getElementById('bn').textContent=cm;
+    document.getElementById('bc').textContent=cc;
   } else {
-    document.getElementById('setup-warning').style.display='block';
-    document.getElementById('member-bar').style.display='none';
+    document.getElementById('sw').style.display='block';
+    document.getElementById('mb').style.display='none';
   }
 }
 
 function showTab(t){
-  document.querySelectorAll('.tab').forEach((el,i)=>{el.classList.toggle('active',['form','settings','admin'][i]===t)});
+  document.querySelectorAll('.tab').forEach((e,i)=>e.classList.toggle('active',['form','settings','admin'][i]===t));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+t).classList.add('active');
-  if(t==='admin'&&adminUnlocked){renderAdminLeads();updateStats()}
+  if(t==='admin'&&adminOk){RL();US();}
 }
 
-function checkAdmin(){
-  const pw=document.getElementById('admin-pw').value;
-  if(pw===ADMIN_PASS){
-    adminUnlocked=true;
-    document.getElementById('admin-lock').style.display='none';
-    document.getElementById('admin-content').style.display='block';
-    document.getElementById('pw-error').style.display='none';
-    document.getElementById('admin-pw').value='';
-    document.getElementById('sheet-url').value=sheetUrl;
-    renderAdminLeads();updateStats();
-    showToast('✅ مرحباً عبدالقادر','success');
+function CA(){
+  const p=document.getElementById('ap').value;
+  if(p===PASS){
+    adminOk=true;
+    document.getElementById('al').style.display='none';
+    document.getElementById('ac').style.display='block';
+    document.getElementById('pe').style.display='none';
+    document.getElementById('ap').value='';
+    document.getElementById('su').value=su;
+    RL(); US();
+    toast('✅ مرحباً عبدالقادر','ok');
   } else {
-    document.getElementById('pw-error').style.display='block';
-    document.getElementById('admin-pw').value='';
+    document.getElementById('pe').style.display='block';
+    document.getElementById('ap').value='';
   }
 }
 
-function lockAdmin(){
-  adminUnlocked=false;
-  document.getElementById('admin-lock').style.display='flex';
-  document.getElementById('admin-content').style.display='none';
+function LA(){
+  adminOk=false;
+  document.getElementById('al').style.display='flex';
+  document.getElementById('ac').style.display='none';
   showTab('form');
 }
 
-function selectTag(el,group){
-  document.querySelectorAll('[data-group="'+group+'"]').forEach(t=>t.classList.remove('sel-blue','sel-gold','sel-green','sel-purple'));
-  el.classList.add(el.dataset.sel);
+function ST(el,g){
+  document.querySelectorAll('[data-g="'+g+'"]').forEach(t=>t.classList.remove('sb','sg','sn','sp'));
+  el.classList.add(el.dataset.s);
 }
 
-function selectCompany(el,cls){
-  document.querySelectorAll('.company-tag').forEach(t=>t.classList.remove('sel-niqat','sel-takweenat'));
-  el.classList.add(cls);
-  selectedCompanyEl=el;
+function SC(el,c){
+  document.querySelectorAll('.ctag').forEach(t=>t.classList.remove('cn','ct'));
+  el.classList.add(c); selCo=el;
 }
 
-function handleImg(e){
-  const files=[...e.target.files];
-  const prev=document.getElementById('img-preview');
-  files.forEach(f=>{
+function HI(e){
+  [...e.target.files].forEach(f=>{
+    imgFiles.push(f);
     const r=new FileReader();
     r.onload=ev=>{
-      imgBase64s.push(ev.target.result);
-      const img=document.createElement('img');img.src=ev.target.result;img.className='preview-img';
-      prev.appendChild(img);
+      imgB64s.push(ev.target.result);
+      const img=document.createElement('img');
+      img.src=ev.target.result; img.className='prev-img';
+      document.getElementById('ip').appendChild(img);
     };
     r.readAsDataURL(f);
   });
-}
-
-async function submitLead(){
-  if(!currentMember||!currentCompany){showToast('⚠️ أكمل إعداد بياناتك أولاً','');showTab('settings');return}
-  const name=document.getElementById('f-name').value.trim();
-  const phone=document.getElementById('f-phone').value.trim();
-  if(!name){showToast('⚠️ اسم العميل مطلوب','');return}
-  if(!phone){showToast('⚠️ رقم الهاتف مطلوب','');return}
-  const productEl=document.querySelector('[data-group="product"][class*="sel-"]');
-  const typeEl=document.querySelector('[data-group="type"][class*="sel-"]');
-  const product=productEl?productEl.textContent.trim().replace(/^[^\w\u0600-\u06FF]+/,'').trim():'';
-  const type=typeEl?typeEl.textContent.trim().replace(/^[^\w\u0600-\u06FF]+/,'').trim():'';
-  const lead={
-    id:Date.now(),
-    timestamp:new Date().toLocaleString('ar-EG'),
-    date:new Date().toLocaleDateString('ar-EG'),
-    member:currentMember,memberCompany:currentCompany,
-    name,phone,
-    email:document.getElementById('f-email').value.trim(),
-    company:document.getElementById('f-company').value.trim(),
-    product,type,
-    notes:document.getElementById('f-notes').value.trim(),
-    images:imgBase64s.length
-  };
-  leads.unshift(lead);
-  localStorage.setItem('big5_leads',JSON.stringify(leads));
-  clearForm();
-  showToast('✅ تم الحفظ بنجاح','success');
-  try{
-    document.getElementById('sync-dot').classList.add('syncing');
-    await fetch(sheetUrl,{method:'POST',body:JSON.stringify(lead),mode:'no-cors'});
-    document.getElementById('sync-text').textContent='آخر إرسال: '+new Date().toLocaleTimeString('ar-EG');
-    document.getElementById('sync-dot').classList.remove('syncing');
-  }catch(e){
-    document.getElementById('sync-dot').classList.remove('syncing');
+  if(e.target.files.length>0){
+    document.getElementById('img-status').style.display='block';
+    document.getElementById('img-status').textContent='📷 '+e.target.files.length+' صورة جاهزة — ستُرفع على Drive تلقائياً عند الحفظ';
   }
 }
 
-function clearForm(){
-  ['f-name','f-phone','f-email','f-company','f-notes'].forEach(id=>document.getElementById(id).value='');
-  document.querySelectorAll('.tag').forEach(t=>t.classList.remove('sel-blue','sel-gold','sel-green','sel-purple'));
-  document.getElementById('img-preview').innerHTML='';
-  document.getElementById('f-img').value='';
-  imgBase64s=[];
+async function SL(){
+  if(!cm||!cc){toast('⚠️ أكمل إعداد بياناتك','err');showTab('settings');return;}
+  const n=document.getElementById('fn').value.trim();
+  const p=document.getElementById('fp').value.trim();
+  if(!n){toast('⚠️ اسم العميل مطلوب','err');return;}
+  if(!p){toast('⚠️ رقم الهاتف مطلوب','err');return;}
+
+  const pe=document.querySelector('[data-g="p"][class*="s"]');
+  const te=document.querySelector('[data-g="t"][class*="s"]');
+  const prod=pe?pe.textContent.trim().replace(/^[^\w\u0600-\u06FF]+/,'').trim():'';
+  const type=te?te.textContent.trim().replace(/^[^\w\u0600-\u06FF]+/,'').trim():'';
+
+  const lead={
+    id:Date.now(),
+    ts:new Date().toLocaleString('ar-EG'),
+    dt:new Date().toLocaleDateString('ar-EG'),
+    m:cm, mc:cc, n, p,
+    e:document.getElementById('fe').value.trim(),
+    c:document.getElementById('fc').value.trim(),
+    pr:prod, t:type,
+    nt:document.getElementById('fno').value.trim(),
+    imgs:imgB64s.length,
+    imgUrls:[]
+  };
+
+  leads.unshift(lead);
+  localStorage.setItem('b5l',JSON.stringify(leads));
+  CF();
+  toast('✅ تم الحفظ — جارٍ الإرسال للشيت...','ok');
+
+  // Send to sheet with images
+  try{
+    document.getElementById('sd').classList.add('sy');
+    const payload={
+      timestamp:lead.ts, member:lead.m, memberCompany:lead.mc,
+      name:lead.n, phone:lead.p, email:lead.e, company:lead.c,
+      product:lead.pr, type:lead.t, notes:lead.nt,
+      imageCount:lead.imgs,
+      imageData: imgB64s.length>0 ? imgB64s[0] : null,
+      imageName: imgFiles.length>0 ? imgFiles[0].name : null
+    };
+    await fetch(su,{method:'POST',body:JSON.stringify(payload),mode:'no-cors'});
+    document.getElementById('stx').textContent='آخر إرسال: '+new Date().toLocaleTimeString('ar-EG');
+    document.getElementById('sd').classList.remove('sy');
+    toast('☁️ تم الإرسال للشيت ورفع الصور على Drive','ok');
+  }catch(ex){
+    document.getElementById('sd').classList.remove('sy');
+  }
+
+  imgFiles=[]; imgB64s=[];
 }
 
-function saveMember(){
-  const name=document.getElementById('member-input').value.trim();
-  if(!name){showToast('⚠️ اكتب اسمك أولاً','');return}
-  if(!selectedCompanyEl){showToast('⚠️ اختر الشركة','');return}
-  currentMember=name;currentCompany=selectedCompanyEl.dataset.company;
-  localStorage.setItem('big5_member',currentMember);localStorage.setItem('big5_company',currentCompany);
-  updateMemberBar();showMemberSavedBox();
-  showToast('✅ تم حفظ بياناتك','success');
+function CF(){
+  ['fn','fp','fe','fc','fno'].forEach(id=>document.getElementById(id).value='');
+  document.querySelectorAll('.tag').forEach(t=>t.classList.remove('sb','sg','sn','sp'));
+  document.getElementById('ip').innerHTML='';
+  document.getElementById('fi').value='';
+  document.getElementById('img-status').style.display='none';
 }
 
-function showMemberSavedBox(){
-  document.getElementById('member-saved-box').style.display='block';
-  document.getElementById('saved-name-txt').textContent='👤 '+currentMember;
-  document.getElementById('saved-co-txt').textContent=currentCompany;
+function SM(){
+  const n=document.getElementById('mi').value.trim();
+  if(!n){toast('⚠️ اكتب اسمك','err');return;}
+  if(!selCo){toast('⚠️ اختر الشركة','err');return;}
+  cm=n; cc=selCo.dataset.c;
+  localStorage.setItem('b5m',cm); localStorage.setItem('b5c',cc);
+  UM(); SMB();
+  toast('✅ تم حفظ بياناتك: '+cm,'ok');
 }
 
-function saveSheetUrl(){
-  sheetUrl=document.getElementById('sheet-url').value.trim();
-  localStorage.setItem('big5_sheet',sheetUrl);
-  showToast('🔗 تم تحديث الرابط','success');
+function SMB(){
+  document.getElementById('msb').style.display='block';
+  document.getElementById('snt').textContent='👤 '+cm;
+  document.getElementById('sct').textContent=cc;
 }
 
-function renderAdminLeads(){
-  const q=(document.getElementById('admin-search').value||'').toLowerCase();
-  const list=document.getElementById('admin-leads-list');
-  let filtered=leads.filter(l=>{
-    const matchQ=!q||l.name.toLowerCase().includes(q)||(l.company||'').toLowerCase().includes(q)||(l.phone||'').includes(q)||(l.member||'').toLowerCase().includes(q);
-    const matchF=filterActive==='all'||l.type===filterActive||l.product===filterActive;
-    return matchQ&&matchF;
+function SSU(){
+  su=document.getElementById('su').value.trim();
+  localStorage.setItem('b5s',su);
+  toast('🔗 تم تحديث الرابط','ok');
+}
+
+function RL(){
+  const q=(document.getElementById('as').value||'').toLowerCase();
+  const ll=document.getElementById('ll');
+  let f=leads.filter(l=>{
+    const mq=!q||l.n.toLowerCase().includes(q)||(l.c||'').toLowerCase().includes(q)||(l.p||'').includes(q)||(l.m||'').toLowerCase().includes(q);
+    const mf=fa==='all'||l.t===fa||l.pr===fa;
+    return mq&&mf;
   });
-  if(!filtered.length){list.innerHTML='<div class="empty-state"><div class="eicon">📭</div><p>لا توجد سجلات</p></div>';return}
-  list.innerHTML=filtered.map(l=>'<div class="lead-item"><div class="lead-name">'+l.name+(l.company?' <span style="font-weight:400;font-size:12px;color:var(--muted)">· '+l.company+'</span>':'')+(l.type==='مهم جداً'?' <span style="color:var(--gold)">⭐</span>':'')+'</div><div class="lead-meta"><span>📱 '+l.phone+'</span>'+(l.product?'<span class="badge badge-blue">'+l.product+'</span>':'')+(l.type&&l.type!=='مهم جداً'?'<span class="badge badge-gray">'+l.type+'</span>':'')+'</div><div style="font-size:11px;color:var(--muted);margin-top:4px">👤 '+l.member+' · '+(l.memberCompany||'')+' · '+l.timestamp+'</div><div class="action-row"><button class="btn btn-secondary btn-sm" onclick="viewLead('+l.id+')">👁️ تفاصيل</button><button class="btn btn-danger btn-sm" onclick="deleteLead('+l.id+')">🗑️ حذف</button></div></div>').join('');
+  if(!f.length){ll.innerHTML='<div class="empty-state"><div class="ei">📭</div><p>لا توجد سجلات مطابقة</p></div>';return;}
+  ll.innerHTML=f.map(l=>'<div class="lead-item"><div class="lead-name">'+l.n+(l.c?' <span style="font-weight:400;font-size:12px;color:var(--muted)">· '+l.c+'</span>':'')+(l.t==='مهم جداً'?' ⭐':'')+'</div><div class="lead-meta"><span>📱 '+l.p+'</span>'+(l.pr?'<span class="badge bb">'+l.pr+'</span>':'')+(l.t&&l.t!=='مهم جداً'?'<span class="badge bgy">'+l.t+'</span>':'')+(l.imgs?'<span class="badge bpp">📷 '+l.imgs+'</span>':'')+'</div><div style="font-size:11px;color:var(--muted);margin-top:4px">👤 '+l.m+' · '+l.mc+' · '+l.ts+'</div><div class="action-row"><button class="btn btn-secondary btn-sm" onclick="VL('+l.id+')">👁️ تفاصيل</button><button class="btn btn-danger btn-sm" onclick="DL('+l.id+')">🗑️ حذف</button></div></div>').join('');
 }
 
-function filterLeads(val,el){
-  filterActive=val;
+function FL(v,el){
+  fa=v;
   document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');renderAdminLeads();
+  el.classList.add('active'); RL();
 }
 
-function viewLead(id){
-  const l=leads.find(x=>x.id===id);if(!l)return;
-  const typeBadge=l.type==='مهم جداً'?'badge-gold':l.type==='شركات'?'badge-green':'badge-gray';
-  document.getElementById('modal-title').textContent=l.name;
-  document.getElementById('modal-body').innerHTML='<div style="text-align:center;margin-bottom:12px">'+(l.product?'<span class="badge badge-blue" style="margin-left:4px">'+l.product+'</span>':'')+(l.type?'<span class="badge '+typeBadge+'">'+l.type+'</span>':'')+'</div>'+row('📱','الهاتف','<a href="tel:'+l.phone+'" style="color:var(--c3)">'+l.phone+'</a>')+(l.email?row('📧','الإيميل','<a href="mailto:'+l.email+'" style="color:var(--c3)">'+l.email+'</a>'):'')+(l.company?row('🏢','شركة العميل',l.company):'')+row('👤','سجّله',l.member)+(l.memberCompany?row('🏷️','يمثل',l.memberCompany):'')+row('🕐','التوقيت',l.timestamp)+(l.notes?'<div style="margin-top:10px;padding:10px;background:var(--light);border-radius:8px;font-size:13px;line-height:1.6"><strong>📝 الملاحظات:</strong><br>'+l.notes+'</div>':'');
-  document.getElementById('modal-overlay').classList.add('open');
+function VL(id){
+  const l=leads.find(x=>x.id===id); if(!l)return;
+  const tb=l.t==='مهم جداً'?'bg2':l.t==='شركات'?'bgr':'bgy';
+  document.getElementById('mt').textContent=l.n;
+  document.getElementById('mb2').innerHTML=
+    '<div style="text-align:center;margin-bottom:12px">'+(l.pr?'<span class="badge bb" style="margin-left:4px">'+l.pr+'</span>':'')+(l.t?'<span class="badge '+tb+'">'+l.t+'</span>':'')+'</div>'+
+    R('📱','الهاتف','<a href="tel:'+l.p+'" style="color:var(--c3)">'+l.p+'</a>')+
+    (l.e?R('📧','الإيميل','<a href="mailto:'+l.e+'" style="color:var(--c3)">'+l.e+'</a>'):'')+
+    (l.c?R('🏢','الشركة',l.c):'')+
+    R('👤','سجّله',l.m)+
+    R('🏷️','يمثل',l.mc)+
+    R('🕐','التوقيت',l.ts)+
+    (l.imgs?R('📷','صور',l.imgs+' صورة — محفوظة في Drive'):'')+
+    (l.nt?'<div style="margin-top:10px;padding:10px;background:var(--light);border-radius:9px;font-size:13px;line-height:1.7"><strong>📝 ملاحظات:</strong><br>'+l.nt+'</div>':'');
+  document.getElementById('mo').classList.add('open');
 }
 
-function row(icon,label,val){return'<div class="detail-row"><span class="detail-label">'+icon+' '+label+'</span><span class="detail-val">'+val+'</span></div>';}
+function R(i,l,v){return'<div class="detail-row"><span class="detail-label">'+i+' '+l+'</span><span class="detail-val">'+v+'</span></div>';}
 
-function deleteLead(id){
+function DL(id){
   if(!confirm('تأكيد حذف هذا السجل؟'))return;
   leads=leads.filter(l=>l.id!==id);
-  localStorage.setItem('big5_leads',JSON.stringify(leads));
-  closeModalDirect();renderAdminLeads();updateStats();showToast('🗑️ تم الحذف','');
+  localStorage.setItem('b5l',JSON.stringify(leads));
+  CMD(); RL(); US();
+  toast('🗑️ تم الحذف','');
 }
 
-function updateStats(){
+function US(){
   const today=new Date().toLocaleDateString('ar-EG');
-  document.getElementById('st-total').textContent=leads.length;
-  document.getElementById('st-vip').textContent=leads.filter(l=>l.type==='مهم جداً').length;
-  document.getElementById('st-companies').textContent=leads.filter(l=>l.type==='شركات').length;
-  document.getElementById('st-today').textContent=leads.filter(l=>l.date===today).length;
-  const byMember={};leads.forEach(l=>{byMember[l.member]=(byMember[l.member]||0)+1});
-  const sorted=Object.entries(byMember).sort((a,b)=>b[1]-a[1]);
-  document.getElementById('team-stats').innerHTML=sorted.length?sorted.map(([name,count],i)=>'<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)"><span style="font-size:16px">'+(i===0?'🥇':i===1?'🥈':i===2?'🥉':'👤')+'</span><span style="flex:1;font-size:13px;font-weight:500">'+name+'</span><span class="badge badge-blue">'+count+' عميل</span></div>').join(''):'<p style="font-size:13px;color:var(--muted);text-align:center;padding:10px">لا توجد سجلات بعد</p>';
+  const total=leads.length;
+  document.getElementById('d-total').textContent=total;
+  document.getElementById('d-vip').textContent=leads.filter(l=>l.t==='مهم جداً').length;
+  document.getElementById('d-co').textContent=leads.filter(l=>l.t==='شركات').length;
+  document.getElementById('d-today').textContent=leads.filter(l=>l.dt===today).length;
+  document.getElementById('d-niqat').textContent=leads.filter(l=>l.mc==='Niqat').length;
+  document.getElementById('d-tak').textContent=leads.filter(l=>l.mc==='Takweenat').length;
+  document.getElementById('d-img').textContent=leads.filter(l=>l.imgs>0).length;
+
+  // Team table - permanent
+  const byM={};
+  leads.forEach(l=>{
+    if(!byM[l.m])byM[l.m]={count:0,co:l.mc};
+    byM[l.m].count++;
+  });
+  const sorted=Object.entries(byM).sort((a,b)=>b[1].count-a[1].count);
+  const maxCount=sorted.length?sorted[0][1].count:1;
+  const rankClass=['rank-1','rank-2','rank-3'];
+  document.getElementById('team-tbody').innerHTML=sorted.map(([name,d],i)=>{
+    const pct=Math.round((d.count/total)*100)||0;
+    return '<tr>'+
+      '<td style="text-align:center"><div class="team-rank '+(rankClass[i]||'rank-n')+'">'+(i<3?['🥇','🥈','🥉'][i]:(i+1))+'</div></td>'+
+      '<td style="font-weight:700">'+name+'</td>'+
+      '<td><span class="badge '+(d.co==='Niqat'?'bb':'bpp')+'">'+d.co+'</span></td>'+
+      '<td style="text-align:center;font-weight:900;font-size:16px;color:var(--c3)">'+d.count+'</td>'+
+      '<td style="min-width:80px"><div class="progress-wrap"><div class="progress-bar" style="width:'+pct+'%"></div></div><div style="font-size:10px;color:var(--muted);margin-top:2px">'+pct+'%</div></td>'+
+    '</tr>';
+  }).join('')||'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">لا توجد بيانات بعد</td></tr>';
+
+  // Product breakdown
+  const prods={'نقاط':0,'تكوينات BIM':0,'تكوينات Interior Design':0};
+  leads.forEach(l=>{if(prods[l.pr]!==undefined)prods[l.pr]++;});
+  document.getElementById('prod-breakdown').innerHTML=Object.entries(prods).map(([name,count])=>{
+    const pct=total?Math.round((count/total)*100):0;
+    return '<div style="margin-bottom:10px"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:4px"><span>'+name+'</span><span style="color:var(--c3)">'+count+' ('+pct+'%)</span></div><div class="progress-wrap"><div class="progress-bar" style="width:'+pct+'%"></div></div></div>';
+  }).join('');
 }
 
-function exportCSV(){
-  if(!leads.length){showToast('⚠️ لا توجد بيانات','');return}
-  const h='التوقيت,العضو,شركة العضو,اسم العميل,الهاتف,الإيميل,شركة العميل,تابع,نوع العميل,الملاحظات\n';
-  const rows=leads.map(l=>[l.timestamp,l.member,l.memberCompany,l.name,l.phone,l.email,l.company,l.product,l.type,l.notes].map(v=>'"'+(v||'').replace(/"/g,'""')+'"').join(',')).join('\n');
-  const blob=new Blob(['\ufeff'+h+rows],{type:'text/csv;charset=utf-8'});
-  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download='BIG5_2026_Leads_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
-  showToast('⬇️ تم التصدير','success');
+function EC(){
+  if(!leads.length){toast('⚠️ لا توجد بيانات','err');return;}
+  const h='التوقيت,العضو,الشركة,الاسم,الهاتف,الإيميل,شركة العميل,تابع,نوع العميل,الملاحظات,عدد الصور\n';
+  const r=leads.map(l=>[l.ts,l.m,l.mc,l.n,l.p,l.e,l.c,l.pr,l.t,l.nt,l.imgs].map(v=>'"'+(v||'').toString().replace(/"/g,'""')+'"').join(',')).join('\n');
+  const b=new Blob(['\ufeff'+h+r],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(b);
+  a.download='BIG5_2026_Leads_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+  toast('⬇️ تم التصدير','ok');
 }
 
-function closeModal(e){if(e.target===document.getElementById('modal-overlay'))closeModalDirect();}
-function closeModalDirect(){document.getElementById('modal-overlay').classList.remove('open');}
-function showToast(msg,type){
+function CM(e){if(e.target===document.getElementById('mo'))CMD();}
+function CMD(){document.getElementById('mo').classList.remove('open');}
+
+function toast(msg,type){
   const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast'+(type?' '+type:'');
-  t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);
+  t.textContent=msg; t.className='toast'+(type?' '+type:'');
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2800);
 }
+
 init();
 </script>
 </body>
