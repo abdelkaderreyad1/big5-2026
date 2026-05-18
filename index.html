@@ -47,7 +47,6 @@ input[type=file]{display:none}
 .btn-primary{background:linear-gradient(135deg,var(--c3),var(--c2));color:#fff}
 .btn-secondary{background:var(--light);color:var(--c2);border:2px solid var(--border)}
 .btn-gold{background:linear-gradient(135deg,var(--gold),#D97706);color:var(--c1)}
-.btn-danger{background:var(--danger);color:#fff}
 .btn-sm{padding:7px 13px;font-size:12px;width:auto;border-radius:8px}
 .member-bar{display:flex;align-items:center;gap:8px;padding:10px 12px;background:linear-gradient(135deg,#EFF6FF,#E0ECFF);border:1px solid #BFDBFE;border-radius:11px;margin-bottom:12px}
 .member-dot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 6px rgba(16,185,129,0.5)}
@@ -106,12 +105,10 @@ input[type=file]{display:none}
 </style>
 </head>
 <body>
-
 <div class="header">
   <h1>🏗️ BIG5 2026-☺ Niqat &amp; Takweenat</h1>
   <p>أداة جمع بيانات العملاء · NIQAT Operations</p>
 </div>
-
 <div class="tabs">
   <div class="tab active" onclick="showTab('form')">📝 تسجيل</div>
   <div class="tab" onclick="showTab('settings')">⚙️ إعداد</div>
@@ -132,7 +129,6 @@ input[type=file]{display:none}
     </div>
     <span style="font-size:11px;color:var(--c3);cursor:pointer;font-weight:700" onclick="showTab('settings')">تعديل</span>
   </div>
-
   <div class="card">
     <div class="stitle">بيانات العميل</div>
     <div class="fg"><label>الاسم الكامل</label><input type="text" id="fn" placeholder="اسم العميل أو الشركة"></div>
@@ -140,7 +136,6 @@ input[type=file]{display:none}
     <div class="fg"><label>البريد الإلكتروني</label><input type="email" id="fe" placeholder="email@example.com" dir="ltr"></div>
     <div class="fg"><label>الشركة / الجهة</label><input type="text" id="fc" placeholder="اسم الشركة"></div>
   </div>
-
   <div class="card">
     <div class="stitle">تابع:</div>
     <div class="tg">
@@ -149,7 +144,6 @@ input[type=file]{display:none}
       <div class="tag" data-g="p" data-s="sn" onclick="ST(this,'p')">🎨 تكوينات Interior Design</div>
     </div>
   </div>
-
   <div class="card">
     <div class="stitle">نوع العميل:</div>
     <div class="tg">
@@ -158,24 +152,21 @@ input[type=file]{display:none}
       <div class="tag" data-g="t" data-s="sg" onclick="ST(this,'t')">⭐ مهم جداً</div>
     </div>
   </div>
-
   <div class="card">
     <div class="stitle">صورة البيزنس كارت</div>
     <div class="upload-area" onclick="document.getElementById('fi').click()">
       <div style="font-size:28px;margin-bottom:5px">📷</div>
       <p style="font-size:12px;color:var(--muted)">اضغط لالتقاط صورة أو رفع ملف</p>
-      <p style="font-size:10px;margin-top:3px;color:var(--c3)">سيُحفظ تلقائياً في Google Drive</p>
+      <p style="font-size:10px;margin-top:3px;color:var(--c3)">سيُحفظ تلقائياً في Google Drive ويظهر رابطه في الشيت</p>
     </div>
     <input type="file" id="fi" accept="image/*" capture="environment" multiple onchange="HI(event)">
     <div id="ip" class="prev-grid"></div>
     <div id="img-st" style="display:none;font-size:11px;color:var(--c3);margin-top:6px;text-align:center"></div>
   </div>
-
   <div class="card">
     <div class="stitle">ملاحظات</div>
     <textarea id="fno" placeholder="أي ملاحظات للرجوع إليها لاحقاً..."></textarea>
   </div>
-
   <div style="padding:0 0 28px">
     <button class="btn btn-save" id="save-btn" onclick="SL()">💾 حفظ وإرسال للشيت</button>
   </div>
@@ -214,7 +205,6 @@ input[type=file]{display:none}
       <p id="pe" style="color:var(--danger);font-size:12px;text-align:center;margin-top:8px;display:none">كلمة السر غير صحيحة ❌</p>
     </div>
   </div>
-
   <div id="ac" style="display:none">
     <div class="admin-badge">
       <span>🛡️ وضع المدير — عبدالقادر رياض</span>
@@ -224,7 +214,7 @@ input[type=file]{display:none}
     <!-- DASHBOARD -->
     <div class="card">
       <div class="stitle">📊 Dashboard — من الشيت مباشرة</div>
-      <div id="dash-loading" class="loading-dash">⏳ جارٍ تحميل البيانات من الشيت...</div>
+      <div id="dash-loading" class="loading-dash">⏳ جارٍ تحميل البيانات...</div>
       <div id="dash-content" style="display:none">
         <div class="dash-grid">
           <div class="dash-card blue"><div class="dash-num" id="d-total">0</div><div class="dash-label">إجمالي العملاء</div></div>
@@ -243,33 +233,30 @@ input[type=file]{display:none}
           </div>
           <div style="background:#ECFDF5;border-radius:10px;padding:10px;text-align:center">
             <div style="font-size:20px;font-weight:900;color:var(--green)" id="d-img">0</div>
-            <div style="font-size:10px;color:var(--muted);font-weight:700">📷 صور</div>
+            <div style="font-size:10px;color:var(--muted);font-weight:700">📷 صور Drive</div>
           </div>
         </div>
-        <button class="btn btn-secondary btn-sm" onclick="loadDash()" style="width:100%;margin-top:4px">🔄 تحديث البيانات</button>
+        <button class="btn btn-secondary btn-sm" onclick="loadDash()" style="width:100%;margin-top:4px">🔄 تحديث من الشيت</button>
       </div>
     </div>
 
     <!-- TEAM TABLE -->
     <div class="card">
-      <div class="stitle">🏆 أداء الفريق — دائم لا يُمسح</div>
+      <div class="stitle">🏆 أداء الفريق — دائم</div>
       <div style="overflow-x:auto">
         <table class="team-table">
-          <thead>
-            <tr>
-              <th style="text-align:center;width:40px">#</th>
-              <th>العضو</th>
-              <th>الشركة</th>
-              <th style="text-align:center">العملاء</th>
-              <th>النسبة</th>
-            </tr>
-          </thead>
+          <thead><tr>
+            <th style="text-align:center;width:40px">#</th>
+            <th>العضو</th><th>الشركة</th>
+            <th style="text-align:center">العملاء</th>
+            <th>النسبة</th>
+          </tr></thead>
           <tbody id="team-tbody"><tr><td colspan="5" style="text-align:center;color:var(--muted);padding:16px">⏳ جارٍ التحميل...</td></tr></tbody>
         </table>
       </div>
     </div>
 
-    <!-- PRODUCT BREAKDOWN -->
+    <!-- PRODUCTS -->
     <div class="card">
       <div class="stitle">📈 توزيع المنتجات</div>
       <div id="prod-bd"><div class="loading-dash">⏳ جارٍ التحميل...</div></div>
@@ -291,13 +278,13 @@ input[type=file]{display:none}
       <div id="ll"><div class="loading-dash">⏳ جارٍ التحميل...</div></div>
     </div>
 
-    <!-- SETTINGS -->
+    <!-- SHEET SETTINGS -->
     <div class="card">
       <div class="stitle">⚙️ إعداد Google Sheets</div>
       <div class="sheet-ok">✅ متربط — BIG5 2026 Customer Database</div>
       <div class="fg"><label>رابط Apps Script</label><input type="url" id="su" dir="ltr" style="font-size:11px"></div>
       <button class="btn btn-secondary btn-sm" onclick="SSU()" style="width:100%;margin-bottom:8px">🔗 تحديث الرابط</button>
-      <a href="https://docs.google.com/spreadsheets/d/1fdOBEGdy65V8a3RXU20CZ0gxucny7miseBHhTDrevt0/edit" target="_blank" style="display:block;text-align:center;font-size:12px;color:var(--c3);font-weight:700;padding:6px">📊 فتح الشيت في Drive</a>
+      <a href="https://docs.google.com/spreadsheets/d/1aYEYjJbxaetEhFHSTo90Lmt9mFwvqrHYXfR_S8UiFOU/edit" target="_blank" style="display:block;text-align:center;font-size:12px;color:var(--c3);font-weight:700;padding:6px">📊 فتح الشيت في Drive</a>
     </div>
 
     <!-- EXPORT -->
@@ -320,13 +307,12 @@ input[type=file]{display:none}
 
 <script>
 const PASS='BIG5Admin';
-const SHEET='https://script.google.com/macros/s/AKfycbyONsW__bvg6bSO192-F9yYw1eFEOF1rMRp-yTajMC_PixXGSYEBzDRkiFGUyS-Knhskw/exec';
-
+const SHEET='https://script.google.com/macros/s/AKfycbwYoxHRf6nKJuUl7bzD4YyptZaY8qUoP7l061XfDyb7yBMbdzUzfWuyln8rc9wRRbgD/exec';
 let sheetData=[];
 let cm=localStorage.getItem('b5m')||'';
 let cc=localStorage.getItem('b5c')||'';
 let su=localStorage.getItem('b5s')||SHEET;
-let fa='all', imgFiles=[], imgB64s=[], adminOk=false, selCo=null;
+let fa='all',imgFiles=[],imgB64s=[],adminOk=false,selCo=null;
 
 function init(){
   UM();
@@ -346,7 +332,7 @@ function UM(){
     document.getElementById('mb').style.display='flex';
     document.getElementById('bn').textContent=cm;
     document.getElementById('bc').textContent=cc;
-  } else {
+  }else{
     document.getElementById('sw').style.display='block';
     document.getElementById('mb').style.display='none';
   }
@@ -370,7 +356,7 @@ function CA(){
     document.getElementById('su').value=su;
     loadDash();
     toast('✅ مرحباً عبدالقادر','ok');
-  } else {
+  }else{
     document.getElementById('pe').style.display='block';
     document.getElementById('ap').value='';
   }
@@ -384,18 +370,21 @@ function LA(){
 }
 
 async function loadDash(){
+  document.getElementById('dash-loading').style.display='block';
+  document.getElementById('dash-content').style.display='none';
   try{
-    const resp=await fetch(su+'?t='+Date.now());
+    const resp=await fetch(su+'?action=get&t='+Date.now());
     const json=await resp.json();
     if(json.status==='ok'){
       sheetData=json.data||[];
       document.getElementById('dash-loading').style.display='none';
       document.getElementById('dash-content').style.display='block';
-      US();
-      RL();
+      US();RL();
+    }else{
+      document.getElementById('dash-loading').textContent='⚠️ خطأ في تحميل البيانات';
     }
   }catch(e){
-    document.getElementById('dash-loading').textContent='⚠️ تعذر تحميل البيانات — تأكد من الاتصال';
+    document.getElementById('dash-loading').textContent='⚠️ تعذر الاتصال بالشيت — تأكد من الاتصال بالإنترنت';
   }
 }
 
@@ -406,7 +395,7 @@ function ST(el,g){
 
 function SC(el,c){
   document.querySelectorAll('.ctag').forEach(t=>t.classList.remove('cn','ct'));
-  el.classList.add(c); selCo=el;
+  el.classList.add(c);selCo=el;
 }
 
 function HI(e){
@@ -416,64 +405,58 @@ function HI(e){
     r.onload=ev=>{
       imgB64s.push(ev.target.result);
       const img=document.createElement('img');
-      img.src=ev.target.result; img.className='prev-img';
+      img.src=ev.target.result;img.className='prev-img';
       document.getElementById('ip').appendChild(img);
     };
     r.readAsDataURL(f);
   });
   if(e.target.files.length>0){
     document.getElementById('img-st').style.display='block';
-    document.getElementById('img-st').textContent='📷 '+imgB64s.length+' صورة جاهزة — ستُرفع على Drive';
+    document.getElementById('img-st').textContent='📷 '+imgB64s.length+' صورة — ستُحفظ في Drive ويظهر الرابط في الشيت';
   }
 }
 
 async function SL(){
   if(!cm||!cc){toast('⚠️ أكمل إعداد بياناتك','err');showTab('settings');return;}
-
   const n=document.getElementById('fn').value.trim();
   const p=document.getElementById('fp').value.trim();
-  const e=document.getElementById('fe').value.trim();
+  const e2=document.getElementById('fe').value.trim();
   const c=document.getElementById('fc').value.trim();
   const nt=document.getElementById('fno').value.trim();
-
-  if(!n&&!p&&!e&&!c){toast('⚠️ أدخل بيانات العميل','err');return;}
-
+  if(!n&&!p&&!e2&&!c){toast('⚠️ أدخل بيانات العميل','err');return;}
   const pe=document.querySelector('[data-g="p"][class*="s"]');
   const te=document.querySelector('[data-g="t"][class*="s"]');
   const prod=pe?pe.textContent.trim().replace(/^[^\w\u0600-\u06FF]+/,'').trim():'';
   const type=te?te.textContent.trim().replace(/^[^\w\u0600-\u06FF]+/,'').trim():'';
-
   const btn=document.getElementById('save-btn');
-  btn.textContent='⏳ جارٍ الإرسال...';
-  btn.disabled=true;
-
+  btn.textContent='⏳ جارٍ الإرسال...';btn.disabled=true;
   const payload={
     timestamp:new Date().toLocaleString('ar-EG'),
-    member:cm, memberCompany:cc,
-    name:n, phone:p, email:e, company:c,
-    product:prod, type:type, notes:nt,
+    member:cm,memberCompany:cc,
+    name:n,phone:p,email:e2,company:c,
+    product:prod,type:type,notes:nt,
     imageCount:imgB64s.length,
-    imageData: imgB64s.length>0?imgB64s[0]:null,
-    imageName: imgFiles.length>0?imgFiles[0].name:null
+    imageData:imgB64s.length>0?imgB64s[0]:null,
+    imageName:imgFiles.length>0?imgFiles[0].name:null
   };
-
   try{
     document.getElementById('sd').classList.add('sy');
     const resp=await fetch(su,{method:'POST',body:JSON.stringify(payload)});
     const json=await resp.json();
     document.getElementById('sd').classList.remove('sy');
     document.getElementById('stx').textContent='آخر إرسال: '+new Date().toLocaleTimeString('ar-EG');
+    if(json.status==='ok'){
+      toast('✅ تم الحفظ في الشيت بنجاح'+(json.imageUrl?' مع صورة Drive':''),'ok');
+    }else{
+      toast('⚠️ حدث خطأ — حاول مرة أخرى','err');
+    }
     CF();
-    toast('✅ تم الحفظ في الشيت بنجاح','ok');
   }catch(ex){
     document.getElementById('sd').classList.remove('sy');
-    toast('⚠️ تم الحفظ محلياً — تأكد من الاتصال','');
-    CF();
+    toast('⚠️ تأكد من الاتصال وحاول مرة أخرى','err');
   }
-
-  btn.textContent='💾 حفظ وإرسال للشيت';
-  btn.disabled=false;
-  imgFiles=[]; imgB64s=[];
+  btn.textContent='💾 حفظ وإرسال للشيت';btn.disabled=false;
+  imgFiles=[];imgB64s=[];
 }
 
 function CF(){
@@ -488,9 +471,9 @@ function SM(){
   const n=document.getElementById('mi').value.trim();
   if(!n){toast('⚠️ اكتب اسمك','err');return;}
   if(!selCo){toast('⚠️ اختر الشركة','err');return;}
-  cm=n; cc=selCo.dataset.c;
-  localStorage.setItem('b5m',cm); localStorage.setItem('b5c',cc);
-  UM(); SMB();
+  cm=n;cc=selCo.dataset.c;
+  localStorage.setItem('b5m',cm);localStorage.setItem('b5c',cc);
+  UM();SMB();
   toast('✅ تم حفظ بياناتك: '+cm,'ok');
 }
 
@@ -521,11 +504,11 @@ function RL(){
 function FL(v,el){
   fa=v;
   document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active'); RL();
+  el.classList.add('active');RL();
 }
 
 function VL(i){
-  const l=sheetData[i]; if(!l)return;
+  const l=sheetData[i];if(!l)return;
   const tb=l.type==='مهم جداً'?'bg2':l.type==='شركات'?'bgr':'bgy';
   document.getElementById('mt').textContent=l.name||'عميل';
   document.getElementById('mb2').innerHTML=
@@ -549,12 +532,14 @@ function US(){
   document.getElementById('d-total').textContent=total;
   document.getElementById('d-vip').textContent=sheetData.filter(l=>l.type==='مهم جداً').length;
   document.getElementById('d-co').textContent=sheetData.filter(l=>l.type==='شركات').length;
-  document.getElementById('d-today').textContent=sheetData.filter(l=>(l.timestamp||'').startsWith(today.split('/')[0])).length;
+  document.getElementById('d-today').textContent=sheetData.filter(l=>{
+    const ts=String(l.timestamp||'');
+    return ts.includes(new Date().toLocaleDateString('ar-EG').split('/')[0]);
+  }).length;
   document.getElementById('d-niqat').textContent=sheetData.filter(l=>l.memberCompany==='Niqat').length;
   document.getElementById('d-tak').textContent=sheetData.filter(l=>l.memberCompany==='Takweenat').length;
-  document.getElementById('d-img').textContent=sheetData.filter(l=>l.imageUrl).length;
+  document.getElementById('d-img').textContent=sheetData.filter(l=>l.imageUrl&&l.imageUrl!=='').length;
 
-  // Team table
   const byM={};
   sheetData.forEach(l=>{
     const k=l.member||'غير معروف';
@@ -574,7 +559,6 @@ function US(){
     '</tr>';
   }).join(''):'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">لا توجد بيانات</td></tr>';
 
-  // Products
   const prods={'نقاط':0,'تكوينات BIM':0,'تكوينات Interior Design':0};
   sheetData.forEach(l=>{if(prods[l.product]!==undefined)prods[l.product]++;});
   document.getElementById('prod-bd').innerHTML=Object.entries(prods).map(([name,count])=>{
@@ -585,8 +569,8 @@ function US(){
 
 function EC(){
   if(!sheetData.length){toast('⚠️ لا توجد بيانات','err');return;}
-  const h='التوقيت,العضو,الشركة,الاسم,الهاتف,الإيميل,شركة العميل,تابع,نوع العميل,الملاحظات,عدد الصور,رابط الصورة\n';
-  const r=sheetData.map(l=>[l.timestamp,l.member,l.memberCompany,l.name,l.phone,l.email,l.company,l.product,l.type,l.notes,l.imageCount,l.imageUrl].map(v=>'"'+(v||'').toString().replace(/"/g,'""')+'"').join(',')).join('\n');
+  const h='التوقيت,العضو,الشركة,الاسم,الهاتف,الإيميل,شركة العميل,تابع,نوع العميل,الملاحظات,صورة Drive,عدد الصور\n';
+  const r=sheetData.map(l=>[l.timestamp,l.member,l.memberCompany,l.name,l.phone,l.email,l.company,l.product,l.type,l.notes,l.imageUrl,l.imageCount].map(v=>'"'+(v||'').toString().replace(/"/g,'""')+'"').join(',')).join('\n');
   const b=new Blob(['\ufeff'+h+r],{type:'text/csv;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(b);
   a.download='BIG5_2026_'+new Date().toISOString().slice(0,10)+'.csv';
@@ -601,7 +585,6 @@ function toast(msg,type){
   t.textContent=msg;t.className='toast'+(type?' '+type:'');
   t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);
 }
-
 init();
 </script>
 </body>
