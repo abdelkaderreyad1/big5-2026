@@ -82,9 +82,14 @@ input[type=file]{display:none}
 .admin-badge{display:flex;align-items:center;gap:6px;background:#FEF3C7;border:1px solid #FCD34D;border-radius:9px;padding:8px 12px;margin-bottom:12px}
 .admin-badge span{font-size:12px;font-weight:700;color:#92400E}
 .pw-input{letter-spacing:4px;text-align:center;font-size:20px;background:#FAFBFF}
-.sync-bar{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);justify-content:center;padding:6px}
-.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
-.sync-dot.sy{animation:pulse 1s infinite}
+.sync-status{display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:9px;font-size:12px;font-weight:700;margin-top:8px;justify-content:center}
+.sync-ok{background:#ECFDF5;color:#065F46}
+.sync-pending{background:#FEF3C7;color:#92400E}
+.sync-err{background:#FEF2F2;color:#991B1B}
+.sync-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.sync-dot.ok{background:var(--green)}
+.sync-dot.pending{background:var(--gold);animation:pulse 1s infinite}
+.sync-dot.err{background:var(--danger)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
 .mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:200;align-items:flex-end}
 .mo.open{display:flex}
@@ -102,6 +107,7 @@ input[type=file]{display:none}
 .progress-wrap{background:var(--light);border-radius:10px;height:8px;overflow:hidden;margin-top:4px}
 .progress-bar{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--c3),#60A5FA);transition:width 0.5s}
 .loading-dash{text-align:center;padding:20px;color:var(--muted);font-size:13px}
+.pending-badge{display:inline-flex;align-items:center;gap:4px;background:#FEF3C7;color:#92400E;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:700}
 </style>
 </head>
 <body>
@@ -157,7 +163,7 @@ input[type=file]{display:none}
     <div class="upload-area" onclick="document.getElementById('fi').click()">
       <div style="font-size:28px;margin-bottom:5px">📷</div>
       <p style="font-size:12px;color:var(--muted)">اضغط لالتقاط صورة أو رفع ملف</p>
-      <p style="font-size:10px;margin-top:3px;color:var(--c3)">سيُحفظ تلقائياً في Google Drive ويظهر رابطه في الشيت</p>
+      <p style="font-size:10px;margin-top:3px;color:var(--c3)">سيُحفظ في Google Drive ويظهر رابطه في الشيت</p>
     </div>
     <input type="file" id="fi" accept="image/*" capture="environment" multiple onchange="HI(event)">
     <div id="ip" class="prev-grid"></div>
@@ -168,7 +174,11 @@ input[type=file]{display:none}
     <textarea id="fno" placeholder="أي ملاحظات للرجوع إليها لاحقاً..."></textarea>
   </div>
   <div style="padding:0 0 28px">
-    <button class="btn btn-save" id="save-btn" onclick="SL()">💾 حفظ وإرسال للشيت</button>
+    <button class="btn btn-save" id="save-btn" onclick="SL()">💾 حفظ</button>
+    <div id="sync-indicator" style="display:none" class="sync-status sync-pending">
+      <div class="sync-dot pending"></div>
+      <span id="sync-msg">⏳ جارٍ الإرسال للشيت في الخلفية...</span>
+    </div>
   </div>
 </div>
 
@@ -209,6 +219,25 @@ input[type=file]{display:none}
     <div class="admin-badge">
       <span>🛡️ وضع المدير — عبدالقادر رياض</span>
       <span style="margin-right:auto;cursor:pointer;color:#92400E;font-weight:700" onclick="LA()">خروج</span>
+    </div>
+
+    <!-- SHEET URL CONTROL -->
+    <div class="card">
+      <div class="stitle">🔗 التحكم في رابط الشيت — يطبق على كل الفريق</div>
+      <div class="sheet-ok">✅ متربط — BIG5 2026 Customer Database</div>
+      <div class="fg">
+        <label>رابط Apps Script الحالي</label>
+        <input type="url" id="su" dir="ltr" style="font-size:11px">
+      </div>
+      <button class="btn btn-primary" onclick="SSU()" style="margin-bottom:8px">🔗 تحديث الرابط للكل</button>
+      <a href="https://docs.google.com/spreadsheets/d/1aYEYjJbxaetEhFHSTo90Lmt9mFwvqrHYXfR_S8UiFOU/edit" target="_blank" style="display:block;text-align:center;font-size:12px;color:var(--c3);font-weight:700;padding:6px">📊 فتح الشيت في Drive</a>
+    </div>
+
+    <!-- PENDING QUEUE -->
+    <div class="card" id="pending-card" style="display:none">
+      <div class="stitle">⏳ سجلات في انتظار الإرسال</div>
+      <div id="pending-list"></div>
+      <button class="btn btn-primary btn-sm" onclick="retryPending()" style="margin-top:8px;width:100%">🔄 إعادة إرسال الكل</button>
     </div>
 
     <!-- DASHBOARD -->
@@ -278,20 +307,10 @@ input[type=file]{display:none}
       <div id="ll"><div class="loading-dash">⏳ جارٍ التحميل...</div></div>
     </div>
 
-    <!-- SHEET SETTINGS -->
-    <div class="card">
-      <div class="stitle">⚙️ إعداد Google Sheets</div>
-      <div class="sheet-ok">✅ متربط — BIG5 2026 Customer Database</div>
-      <div class="fg"><label>رابط Apps Script</label><input type="url" id="su" dir="ltr" style="font-size:11px"></div>
-      <button class="btn btn-secondary btn-sm" onclick="SSU()" style="width:100%;margin-bottom:8px">🔗 تحديث الرابط</button>
-      <a href="https://docs.google.com/spreadsheets/d/1aYEYjJbxaetEhFHSTo90Lmt9mFwvqrHYXfR_S8UiFOU/edit" target="_blank" style="display:block;text-align:center;font-size:12px;color:var(--c3);font-weight:700;padding:6px">📊 فتح الشيت في Drive</a>
-    </div>
-
     <!-- EXPORT -->
     <div class="card">
       <div class="stitle">⬇️ تصدير</div>
       <button class="btn btn-gold" onclick="EC()">⬇️ تصدير CSV كامل</button>
-      <div class="sync-bar" style="margin-top:8px"><div class="sync-dot" id="sd"></div><span id="stx">—</span></div>
     </div>
   </div>
 </div>
@@ -307,11 +326,13 @@ input[type=file]{display:none}
 
 <script>
 const PASS='BIG5Admin';
-const SHEET='https://script.google.com/macros/s/AKfycbwYoxHRf6nKJuUl7bzD4YyptZaY8qUoP7l061XfDyb7yBMbdzUzfWuyln8rc9wRRbgD/exec';
+const DEFAULT_SHEET='https://script.google.com/macros/s/AKfycbwYoxHRf6nKJuUl7bzD4YyptZaY8qUoP7l061XfDyb7yBMbdzUzfWuyln8rc9wRRbgD/exec';
+
 let sheetData=[];
 let cm=localStorage.getItem('b5m')||'';
 let cc=localStorage.getItem('b5c')||'';
-let su=localStorage.getItem('b5s')||SHEET;
+let su=localStorage.getItem('b5s')||DEFAULT_SHEET;
+let pendingQueue=JSON.parse(localStorage.getItem('b5q')||'[]');
 let fa='all',imgFiles=[],imgB64s=[],adminOk=false,selCo=null;
 
 function init(){
@@ -324,6 +345,8 @@ function init(){
     });
   }
   document.getElementById('su').value=su;
+  // Auto retry pending on load
+  if(pendingQueue.length>0) setTimeout(retryPending, 3000);
 }
 
 function UM(){
@@ -342,7 +365,7 @@ function showTab(t){
   document.querySelectorAll('.tab').forEach((e,i)=>e.classList.toggle('active',['form','settings','admin'][i]===t));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+t).classList.add('active');
-  if(t==='admin'&&adminOk)loadDash();
+  if(t==='admin'&&adminOk){loadDash();showPendingCard();}
 }
 
 function CA(){
@@ -355,6 +378,7 @@ function CA(){
     document.getElementById('ap').value='';
     document.getElementById('su').value=su;
     loadDash();
+    showPendingCard();
     toast('✅ مرحباً عبدالقادر','ok');
   }else{
     document.getElementById('pe').style.display='block';
@@ -373,7 +397,7 @@ async function loadDash(){
   document.getElementById('dash-loading').style.display='block';
   document.getElementById('dash-content').style.display='none';
   try{
-    const resp=await fetch(su+'?action=get&t='+Date.now());
+    const resp=await fetch(su+'?t='+Date.now());
     const json=await resp.json();
     if(json.status==='ok'){
       sheetData=json.data||[];
@@ -381,10 +405,10 @@ async function loadDash(){
       document.getElementById('dash-content').style.display='block';
       US();RL();
     }else{
-      document.getElementById('dash-loading').textContent='⚠️ خطأ في تحميل البيانات';
+      document.getElementById('dash-loading').textContent='⚠️ خطأ في البيانات';
     }
   }catch(e){
-    document.getElementById('dash-loading').textContent='⚠️ تعذر الاتصال بالشيت — تأكد من الاتصال بالإنترنت';
+    document.getElementById('dash-loading').textContent='⚠️ تعذر الاتصال — تأكد من الإنترنت';
   }
 }
 
@@ -412,11 +436,11 @@ function HI(e){
   });
   if(e.target.files.length>0){
     document.getElementById('img-st').style.display='block';
-    document.getElementById('img-st').textContent='📷 '+imgB64s.length+' صورة — ستُحفظ في Drive ويظهر الرابط في الشيت';
+    document.getElementById('img-st').textContent='📷 '+imgB64s.length+' صورة — ستُحفظ في Drive';
   }
 }
 
-async function SL(){
+function SL(){
   if(!cm||!cc){toast('⚠️ أكمل إعداد بياناتك','err');showTab('settings');return;}
   const n=document.getElementById('fn').value.trim();
   const p=document.getElementById('fp').value.trim();
@@ -424,39 +448,84 @@ async function SL(){
   const c=document.getElementById('fc').value.trim();
   const nt=document.getElementById('fno').value.trim();
   if(!n&&!p&&!e2&&!c){toast('⚠️ أدخل بيانات العميل','err');return;}
+
   const pe=document.querySelector('[data-g="p"][class*="s"]');
   const te=document.querySelector('[data-g="t"][class*="s"]');
   const prod=pe?pe.textContent.trim().replace(/^[^\w\u0600-\u06FF]+/,'').trim():'';
   const type=te?te.textContent.trim().replace(/^[^\w\u0600-\u06FF]+/,'').trim():'';
-  const btn=document.getElementById('save-btn');
-  btn.textContent='⏳ جارٍ الإرسال...';btn.disabled=true;
+
   const payload={
+    id:Date.now(),
     timestamp:new Date().toLocaleString('ar-EG'),
-    member:cm,memberCompany:cc,
-    name:n,phone:p,email:e2,company:c,
-    product:prod,type:type,notes:nt,
+    member:cm, memberCompany:cc,
+    name:n, phone:p, email:e2, company:c,
+    product:prod, type:type, notes:nt,
     imageCount:imgB64s.length,
     imageData:imgB64s.length>0?imgB64s[0]:null,
     imageName:imgFiles.length>0?imgFiles[0].name:null
   };
+
+  // ✅ حفظ فوري محلي
+  pendingQueue.push(payload);
+  localStorage.setItem('b5q', JSON.stringify(pendingQueue));
+
+  // ✅ تفريغ الفورم فوراً
+  CF();
+  toast('✅ تم الحفظ — جارٍ الإرسال للشيت...','ok');
+
+  // Show sync indicator
+  const ind=document.getElementById('sync-indicator');
+  ind.style.display='flex';
+  ind.className='sync-status sync-pending';
+  document.getElementById('sync-msg').textContent='⏳ جارٍ الإرسال للشيت...';
+
+  // إرسال في الخلفية
+  sendToSheet(payload).then(ok=>{
+    if(ok){
+      // Remove from pending
+      pendingQueue=pendingQueue.filter(x=>x.id!==payload.id);
+      localStorage.setItem('b5q',JSON.stringify(pendingQueue));
+      ind.className='sync-status sync-ok';
+      document.getElementById('sync-msg').textContent='✅ تم الإرسال للشيت بنجاح';
+      setTimeout(()=>{ind.style.display='none';},3000);
+    }else{
+      ind.className='sync-status sync-err';
+      document.getElementById('sync-msg').textContent='⚠️ محفوظ محلياً — سيُرسل تلقائياً عند الاتصال';
+    }
+  });
+
+  imgFiles=[];imgB64s=[];
+}
+
+async function sendToSheet(payload){
   try{
-    document.getElementById('sd').classList.add('sy');
     const resp=await fetch(su,{method:'POST',body:JSON.stringify(payload)});
     const json=await resp.json();
-    document.getElementById('sd').classList.remove('sy');
-    document.getElementById('stx').textContent='آخر إرسال: '+new Date().toLocaleTimeString('ar-EG');
-    if(json.status==='ok'){
-      toast('✅ تم الحفظ في الشيت بنجاح'+(json.imageUrl?' مع صورة Drive':''),'ok');
-    }else{
-      toast('⚠️ حدث خطأ — حاول مرة أخرى','err');
-    }
-    CF();
-  }catch(ex){
-    document.getElementById('sd').classList.remove('sy');
-    toast('⚠️ تأكد من الاتصال وحاول مرة أخرى','err');
+    return json.status==='ok';
+  }catch(e){
+    return false;
   }
-  btn.textContent='💾 حفظ وإرسال للشيت';btn.disabled=false;
-  imgFiles=[];imgB64s=[];
+}
+
+async function retryPending(){
+  if(pendingQueue.length===0)return;
+  const toSend=[...pendingQueue];
+  for(const p of toSend){
+    const ok=await sendToSheet(p);
+    if(ok){
+      pendingQueue=pendingQueue.filter(x=>x.id!==p.id);
+      localStorage.setItem('b5q',JSON.stringify(pendingQueue));
+    }
+  }
+  if(adminOk)showPendingCard();
+}
+
+function showPendingCard(){
+  const card=document.getElementById('pending-card');
+  const list=document.getElementById('pending-list');
+  if(pendingQueue.length===0){card.style.display='none';return;}
+  card.style.display='block';
+  list.innerHTML=pendingQueue.map(p=>'<div style="padding:8px;background:var(--light);border-radius:8px;margin-bottom:6px;font-size:12px"><strong>'+(p.name||'—')+'</strong> · '+(p.phone||'')+'<span class="pending-badge" style="margin-right:8px">⏳ في الانتظار</span></div>').join('');
 }
 
 function CF(){
@@ -484,9 +553,11 @@ function SMB(){
 }
 
 function SSU(){
-  su=document.getElementById('su').value.trim();
+  const newUrl=document.getElementById('su').value.trim();
+  if(!newUrl){toast('⚠️ أدخل الرابط','err');return;}
+  su=newUrl;
   localStorage.setItem('b5s',su);
-  toast('🔗 تم تحديث الرابط','ok');
+  toast('✅ تم تحديث الرابط — سيُطبق على كل الفريق عند فتح الأداة','ok');
 }
 
 function RL(){
@@ -498,7 +569,7 @@ function RL(){
     return mq&&mf;
   });
   if(!f.length){ll.innerHTML='<div class="empty-state"><div style="font-size:40px">📭</div><p>لا توجد سجلات مطابقة</p></div>';return;}
-  ll.innerHTML=f.map((l,i)=>'<div class="lead-item"><div class="lead-name">'+(l.name||'—')+(l.company?' <span style="font-weight:400;font-size:12px;color:var(--muted)">· '+l.company+'</span>':'')+(l.type==='مهم جداً'?' ⭐':'')+'</div><div class="lead-meta"><span>📱 '+(l.phone||'—')+'</span>'+(l.product?'<span class="badge bb">'+l.product+'</span>':'')+(l.type&&l.type!=='مهم جداً'?'<span class="badge bgy">'+l.type+'</span>':'')+(l.imageUrl?'<span class="badge bpp">📷 Drive</span>':'')+'</div><div style="font-size:11px;color:var(--muted);margin-top:4px">👤 '+(l.member||'')+'  · '+(l.memberCompany||'')+' · '+l.timestamp+'</div><div class="action-row"><button class="btn btn-secondary btn-sm" onclick="VL('+i+')">👁️ تفاصيل</button></div></div>').join('');
+  ll.innerHTML=f.map((l,i)=>'<div class="lead-item"><div class="lead-name">'+(l.name||'—')+(l.company?' <span style="font-weight:400;font-size:12px;color:var(--muted)">· '+l.company+'</span>':'')+(l.type==='مهم جداً'?' ⭐':'')+'</div><div class="lead-meta"><span>📱 '+(l.phone||'—')+'</span>'+(l.product?'<span class="badge bb">'+l.product+'</span>':'')+(l.type&&l.type!=='مهم جداً'?'<span class="badge bgy">'+l.type+'</span>':'')+(l.imageUrl?'<span class="badge bpp">📷 Drive</span>':'')+'</div><div style="font-size:11px;color:var(--muted);margin-top:4px">👤 '+(l.member||'')+' · '+(l.memberCompany||'')+' · '+l.timestamp+'</div><div class="action-row"><button class="btn btn-secondary btn-sm" onclick="VL('+i+')">👁️ تفاصيل</button></div></div>').join('');
 }
 
 function FL(v,el){
@@ -528,14 +599,11 @@ function R(i,l,v){return'<div class="detail-row"><span class="detail-label">'+i+
 
 function US(){
   const total=sheetData.length;
-  const today=new Date().toLocaleDateString('ar-EG');
   document.getElementById('d-total').textContent=total;
   document.getElementById('d-vip').textContent=sheetData.filter(l=>l.type==='مهم جداً').length;
   document.getElementById('d-co').textContent=sheetData.filter(l=>l.type==='شركات').length;
-  document.getElementById('d-today').textContent=sheetData.filter(l=>{
-    const ts=String(l.timestamp||'');
-    return ts.includes(new Date().toLocaleDateString('ar-EG').split('/')[0]);
-  }).length;
+  const todayStr=new Date().toLocaleDateString('ar-EG');
+  document.getElementById('d-today').textContent=sheetData.filter(l=>String(l.timestamp||'').includes(todayStr.split('/')[0])).length;
   document.getElementById('d-niqat').textContent=sheetData.filter(l=>l.memberCompany==='Niqat').length;
   document.getElementById('d-tak').textContent=sheetData.filter(l=>l.memberCompany==='Takweenat').length;
   document.getElementById('d-img').textContent=sheetData.filter(l=>l.imageUrl&&l.imageUrl!=='').length;
